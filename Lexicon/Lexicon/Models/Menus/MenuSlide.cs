@@ -1,26 +1,21 @@
-﻿namespace Lexicon
+﻿namespace Lexicon.Models.Menus
 {
-    using Lexicon.Contracts;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Lexicon.Models.Contracts;
 
-    public class Menu : IMenu
+    public class MenuSlide : IMenuSlide
     {
-        private readonly string id;
+        private readonly int id;
         private readonly string[] options;
         private int selectedOption = 0;
 
 
-        public Menu(string id, string[] options)
+        public MenuSlide(int id, string[] options)
         {
             this.id = id;
             this.options = options;
         }
 
-        public string Id => id;
+        public int Id => id;
         public string[] Options => options;
 
         public int SelectedOption

@@ -1,5 +1,6 @@
-﻿namespace Lexicon
+﻿namespace Lexicon.Models.Database
 {
+    using Lexicon.Models.Contracts;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -22,6 +23,6 @@
 
         }
 
-        public Quiz CompletedQuiz { get;}
+        public IQuiz Answers { get; set; }
     }
 }

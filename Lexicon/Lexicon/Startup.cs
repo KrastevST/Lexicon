@@ -1,13 +1,13 @@
 ﻿namespace Lexicon
 {
-    using System;
+    using Lexicon.Engine.Navigation;
 
     class Program
     {
         static void Main()
         {
-            var menu = new Navigator();
-            menu.Start();
+            var nav = new Navigator();
+            nav.Start();
         }
     }
 }
