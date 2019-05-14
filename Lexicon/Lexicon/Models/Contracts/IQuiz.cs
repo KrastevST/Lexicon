@@ -5,5 +5,7 @@
     public interface IQuiz
     {
         IDictionary<string, string> Data { get; set; }
+
+        void Start();
     }
 }

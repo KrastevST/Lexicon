@@ -46,5 +46,10 @@
                 File.Delete(saveFile);
             }
         }
+
+        public static void Add(Person person)
+        {
+            People.Add(person);
+        }
     }
 }

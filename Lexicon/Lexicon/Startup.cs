@@ -10,6 +10,8 @@
     {
         static void Main()
         {
+            var nav = new Navigator();
+            nav.Start();
         }
     }
 }

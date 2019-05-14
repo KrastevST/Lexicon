@@ -18,7 +18,7 @@
             this.Quiz = new Quiz();
         }
 
-        // TODO validate fields
+        // TODO validate all properties
         public IQuiz Quiz { get; set; }
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }
