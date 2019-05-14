@@ -2,30 +2,25 @@
 {
     using Lexicon.Engine.Contracts;
     using Lexicon.Models.Contracts;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Lexicon.Models.Database;
 
     public class QuizMaster : IQuizMaster
     {
-        private IQuiz quiz;
         private IPerson person;
 
         public QuizMaster()
         {
-
+            this.person = new Person();
         }
 
         public void CollectData()
         {
-
+            // TODO ask the 4 property questions
         }
 
         public void StartQuiz()
         {
-
+            // TODO loop the quiz
         }
     }
 }

@@ -3,11 +3,10 @@
     using Lexicon.Models.Contracts;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Runtime.Serialization;
 
-    public class Quiz : IQuiz
+    [Serializable()]
+    public class Quiz : IQuiz, ISerializable
     {
         private IDictionary<string, string> data;
 
@@ -29,5 +28,15 @@
         }
 
         public IDictionary<string, string> Data { get => data; set => data = value; }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Data", this.Data);
+        }
+
+        public Quiz(SerializationInfo info, StreamingContext context)
+        {
+            this.Data = (Dictionary<string, string>)info.GetValue("Data", typeof(Dictionary<string, string>));
+        }
     }
 }

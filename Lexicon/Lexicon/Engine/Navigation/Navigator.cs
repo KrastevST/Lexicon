@@ -3,6 +3,7 @@
     using Lexicon.Engine.Contracts;
     using Lexicon.Engine.DataCollection;
     using Lexicon.Models.Contracts;
+    using Lexicon.Models.Database;
     using Lexicon.Models.Menus;
     using System;
 
@@ -36,6 +37,7 @@
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.CursorVisible = false;
+            ListOfPeople.Load();
             RefreshTheDisplay(currentMenuSlide);
 
             while (true)
@@ -80,6 +82,7 @@
             switch (NewSlideId)
             {
                 case 10:
+                    ListOfPeople.Save();
                     Environment.Exit(0);
                     break;
                 case 11:

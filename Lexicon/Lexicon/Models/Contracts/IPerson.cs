@@ -8,10 +8,10 @@
 
     public interface IPerson
     {
+        IQuiz Quiz { get; set; }
         string FirstName { get; set; }
-
         string LastName { get; set; }
-
-        IQuiz Answers { get; set; }
+        int Age { get; set; }
+        string Gender { get; set; }
     }
 }
