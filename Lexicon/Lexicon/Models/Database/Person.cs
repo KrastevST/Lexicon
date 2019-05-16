@@ -13,8 +13,13 @@
         private int age;
         private string gender;
 
-        public Person()
+        public Person(string fName, string lName, int age, string gender)
         {
+            this.FirstName = fName;
+            this.LastName = lName;
+            this.Age = age;
+            this.Gender = gender;
+
             this.Quiz = new Quiz();
         }
 
@@ -42,7 +47,5 @@
             this.Gender = (string)info.GetValue("Gender", typeof(string));
             this.Quiz = (Quiz)info.GetValue("Quiz", typeof(Quiz));
         }
-
-        // TODO find best practice for positioning deserialization constructor
     }
 }

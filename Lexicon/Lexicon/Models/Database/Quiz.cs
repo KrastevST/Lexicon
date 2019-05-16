@@ -9,20 +9,9 @@
     public class Quiz : IQuiz, ISerializable
     {
         // TODO arrange appropriately
-        private IDictionary<string, string> data;
+        private IDictionary<string, string> questionnaire;
         private readonly string defaultAnswer = "Not answered";
-
-        public Quiz()
-        {
-            this.Data = new Dictionary<string, string>();
-
-            foreach (var question in Questions)
-            {
-                this.Data.Add(question, defaultAnswer);
-            }
-        }
-
-        public IReadOnlyCollection<string> Questions =
+        private IReadOnlyCollection<string> questions =
             new List<string>
             {
                 "What is your name?",
@@ -37,36 +26,47 @@
                 "Do you like this quiz?",
                 "What do you think about the author?"
             };
-        public IDictionary<string, string> Data { get => data; set => data = value; }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public Quiz()
         {
-            info.AddValue("Data", this.Data);
+            this.Questionnaire = new Dictionary<string, string>();
+
+            foreach (var question in questions)
+            {
+                this.Questionnaire.Add(question, defaultAnswer);
+            }
         }
 
-        public Quiz(SerializationInfo info, StreamingContext context)
-        {
-            this.Data = (Dictionary<string, string>)info.GetValue("Data", typeof(Dictionary<string, string>));
-        }
+        public IDictionary<string, string> Questionnaire { get => this.questionnaire; set => this.questionnaire = value; }
 
         public void Start()
         {
-            while (this.Data.Values.Contains(defaultAnswer))
+            while (this.Questionnaire.Values.Contains(defaultAnswer))
             {
-                foreach (var question in Questions)
+                foreach (var question in questions)
                 {
                     // TODO Stylize text
                     // TODO add skip question functionality
                     Console.Clear();
+                    // TODO swap newlines with cursor position
                     Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
 
-                    if (Data[question] == defaultAnswer)
+                    if (Questionnaire[question] == defaultAnswer)
                     {
                         Console.WriteLine(question);
-                        Data[question] = Console.ReadLine();
+                        Questionnaire[question] = Console.ReadLine();
                     }
                 }
             }
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Questionnaire", this.Questionnaire);
+        }
+
+        public Quiz(SerializationInfo info, StreamingContext context)
+        {
+            this.Questionnaire = (Dictionary<string, string>)info.GetValue("Questionnaire", typeof(Dictionary<string, string>));
         }
     }
 }

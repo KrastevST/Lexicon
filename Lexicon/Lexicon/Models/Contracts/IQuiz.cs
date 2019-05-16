@@ -4,7 +4,7 @@
 
     public interface IQuiz
     {
-        IDictionary<string, string> Data { get; set; }
+        IDictionary<string, string> Questionnaire { get; set; }
 
         void Start();
     }

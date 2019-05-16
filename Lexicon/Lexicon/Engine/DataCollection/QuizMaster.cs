@@ -1,49 +1,50 @@
 ﻿namespace Lexicon.Engine.DataCollection
 {
-    using Lexicon.Engine.Contracts;
-    using Lexicon.Models.Contracts;
-    using Lexicon.Models.Database;
     using System;
+    using Lexicon.Engine.Contracts;
+    using Lexicon.Models.Database;
 
     public class QuizMaster : IQuizMaster
     {
-        private IPerson person;
-
-        public QuizMaster()
-        {
-            this.person = new Person();
-        }
-
-        public void CollectData()
-        {
-            Console.Clear();
-            Console.WriteLine("Please enter your first name:");
-            // TODO validate input for all properties
-            this.person.FirstName = FormatName(Console.ReadLine());
-            Console.Clear();
-
-            Console.WriteLine("Please enter your last name:");
-            // TODO validate input for all properties
-            this.person.LastName = FormatName(Console.ReadLine());
-            Console.Clear();
-
-            Console.WriteLine("Please enter your age:");
-            // TODO validate input for all properties
-            int age;
-            int.TryParse(Console.ReadLine(), out age);
-            this.person.Age = age;
-            Console.Clear();
-
-            Console.WriteLine("Please enter your gender:");
-            // TODO validate input for all properties
-            this.person.Gender = Console.ReadLine().ToLower();
-            Console.Clear();
-        }
+        private Person person;
 
         public void StartQuiz()
         {
             Console.Clear();
+            CollectPersonalData();
             this.person.Quiz.Start();
+            ListOfPeople.Add(this.person);
+        }
+
+        private void CollectPersonalData()
+        {
+            Console.Clear();
+            Console.WriteLine("Please enter your first name:");
+            string firstName = FormatName(Console.ReadLine());
+            Console.Clear();
+
+            Console.WriteLine("Please enter your last name:");
+            string lastName = FormatName(Console.ReadLine());
+            Console.Clear();
+
+            Console.WriteLine("Please enter your age:");
+            int age;
+            int.TryParse(Console.ReadLine(), out age);
+            Console.Clear();
+
+            Console.WriteLine("Please enter your gender:");
+            string gender = Console.ReadLine().ToLower();
+            Console.Clear();
+
+            try
+            {
+                this.person = new Person(firstName, lastName, age, gender);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                this.CollectPersonalData();
+            }
         }
 
         private string FormatName(string name)

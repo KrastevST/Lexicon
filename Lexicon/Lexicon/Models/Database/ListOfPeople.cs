@@ -7,13 +7,13 @@
     public static class ListOfPeople
     {
         private static IList<Person> people;
-        private static readonly string saveFile = "ListOfPeople.dat";
+        private static readonly string dataFile = "ListOfPeople.dat";
 
         public static IList<Person> People { get => people; set => people = value; }
 
         public static void Save()
         {
-            Stream stream = File.Open(saveFile, FileMode.Create);
+            Stream stream = File.Open(dataFile, FileMode.Create);
 
             BinaryFormatter bf = new BinaryFormatter();
 
@@ -23,9 +23,9 @@
 
         public static void Load()
         {
-            if (File.Exists(saveFile))
+            if (File.Exists(dataFile))
             {
-                Stream stream = File.Open(saveFile, FileMode.Open);
+                Stream stream = File.Open(dataFile, FileMode.Open);
 
 
                 BinaryFormatter bf = new BinaryFormatter();
@@ -41,9 +41,9 @@
 
         public static void Erase()
         {
-            if (File.Exists(saveFile))
+            if (File.Exists(dataFile))
             {
-                File.Delete(saveFile);
+                File.Delete(dataFile);
             }
         }
 

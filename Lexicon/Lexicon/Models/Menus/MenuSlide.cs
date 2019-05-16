@@ -4,18 +4,18 @@
 
     public class MenuSlide : IMenuSlide
     {
-        private readonly int id;
+        private readonly string id;
         private readonly string[] options;
         private int selectedOption = 0;
 
 
-        public MenuSlide(int id, string[] options)
+        public MenuSlide(string id, string[] options)
         {
             this.id = id;
             this.options = options;
         }
 
-        public int Id => id;
+        public string Id => id;
         public string[] Options => options;
 
         public int SelectedOption

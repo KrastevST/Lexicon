@@ -11,21 +11,21 @@
     {
         private IMenu menu;
         private IMenuSlide currentMenuSlide;
-        private int newSlideId;
+        private string newSlideId;
 
         public Navigator()
         {
             this.menu = new Menu();
-            this.newSlideId = 1;
+            this.newSlideId = "0";
             this.currentMenuSlide = this.menu.GetSlideById(newSlideId);
         }
 
-        private int NewSlideId
+        private string NewSlideId
         {
             get => newSlideId;
             set
             {
-                if (value > 1)
+                if (value != "0")
                 {
                     newSlideId = value;
                 }
@@ -77,30 +77,30 @@
         private void EnterSelectedOption()
         {
             // Id is the numeric pathway from main menu to the slide
-            NewSlideId = currentMenuSlide.Id * 10 + currentMenuSlide.SelectedOption;
+            NewSlideId = currentMenuSlide.Id + currentMenuSlide.SelectedOption;
 
-            switch (NewSlideId)
+           
+            if (newSlideId == "00")
             {
-                case 10:
-                    ListOfPeople.Save();
-                    Environment.Exit(0);
-                    break;
-                case 11:
-                    var qMaster = new QuizMaster();
-                    qMaster.CollectData();
-                    qMaster.StartQuiz();
-                    ReturnToPreviousMenu();
-                    break;
-                default:
-                    currentMenuSlide = menu.GetSlideById(newSlideId);
-                    RefreshTheDisplay(currentMenuSlide);
-                    break;
+                ListOfPeople.Save();
+                Environment.Exit(0);
+            }
+            else if (newSlideId == "01")
+            {
+                var qMaster = new QuizMaster();
+                qMaster.StartQuiz();
+                ReturnToPreviousMenu();
+            }
+            else
+            {
+                currentMenuSlide = menu.GetSlideById(newSlideId);
+                RefreshTheDisplay(currentMenuSlide);
             }
         }
 
         private void ReturnToPreviousMenu()
         {
-            NewSlideId = currentMenuSlide.Id / 10;
+            NewSlideId = currentMenuSlide.Id.Substring(0, currentMenuSlide.Id.Length - 2);
             currentMenuSlide = menu.GetSlideById(newSlideId);
             RefreshTheDisplay(currentMenuSlide);
 
@@ -109,18 +109,17 @@
         private void RefreshTheDisplay(IMenuSlide menuSlide)
         {
             Console.Clear();
-            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
 
             for (int i = menuSlide.Options.Length - 1; i >= 0; i--)
             {
+                int yCoordinate = 10 + menuSlide.Options.Length - i;
+
                 if (i == menuSlide.SelectedOption)
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
-
                     string textLine = $"-->{menuSlide.Options[i]}<--";
-                    // Center the text
-                    Console.SetCursorPosition(((Console.WindowWidth - textLine.Length) / 2),
-                        Console.CursorTop);
+
+                    Console.SetCursorPosition((Console.WindowWidth - textLine.Length) / 2, yCoordinate);
                     Console.WriteLine(textLine);
 
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -128,9 +127,8 @@
                 else
                 {
                     string textLine = menuSlide.Options[i];
-                    // Center the text
-                    Console.SetCursorPosition((Console.WindowWidth - textLine.Length) / 2,
-                        Console.CursorTop);
+
+                    Console.SetCursorPosition((Console.WindowWidth - textLine.Length) / 2, yCoordinate);
                     Console.WriteLine(textLine);
                 }
             }
