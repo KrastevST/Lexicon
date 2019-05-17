@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Lexicon.Engine.Printing;
     using Lexicon.Models.Contracts;
 
     [Serializable()]
@@ -45,15 +46,12 @@
             {
                 foreach (var question in questions)
                 {
-                    // TODO Stylize text
                     // TODO add skip question functionality
                     Console.Clear();
-                    // TODO swap newlines with cursor position
-                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n");
 
                     if (Questionnaire[question] == defaultAnswer)
                     {
-                        Console.WriteLine(question);
+                        Printer.PrintQuestion(question);
                         Questionnaire[question] = Console.ReadLine();
                     }
                 }

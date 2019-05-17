@@ -2,6 +2,7 @@
 {
     using System;
     using Lexicon.Engine.Contracts;
+    using Lexicon.Engine.Printing;
     using Lexicon.Models.Database;
 
     public class QuizMaster : IQuizMaster
@@ -18,23 +19,18 @@
 
         private void CollectPersonalData()
         {
-            Console.Clear();
-            Console.WriteLine("Please enter your first name:");
+            Printer.PrintQuestion("Please enter your first name:");
             string firstName = FormatName(Console.ReadLine());
-            Console.Clear();
 
-            Console.WriteLine("Please enter your last name:");
+            Printer.PrintQuestion("Please enter your last name:");
             string lastName = FormatName(Console.ReadLine());
-            Console.Clear();
 
-            Console.WriteLine("Please enter your age:");
+            Printer.PrintQuestion("Please enter your age:");
             int age;
             int.TryParse(Console.ReadLine(), out age);
-            Console.Clear();
 
-            Console.WriteLine("Please enter your gender:");
+            Printer.PrintQuestion("Please enter your gender:");
             string gender = Console.ReadLine().ToLower();
-            Console.Clear();
 
             try
             {

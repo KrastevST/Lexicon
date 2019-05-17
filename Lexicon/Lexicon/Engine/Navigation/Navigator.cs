@@ -1,11 +1,11 @@
 ﻿namespace Lexicon.Engine.Navigation
 {
+    using System;
     using Lexicon.Engine.Contracts;
     using Lexicon.Engine.DataCollection;
     using Lexicon.Models.Contracts;
     using Lexicon.Models.Database;
     using Lexicon.Models.Menus;
-    using System;
 
     public class Navigator : INavigator
     {
