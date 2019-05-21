@@ -6,12 +6,14 @@
     using Lexicon.Models.Contracts;
     using Lexicon.Models.Database;
     using Lexicon.Models.Menus;
+    using Lexicon.Utils;
 
     public class Navigator : INavigator
     {
         private IMenu menu;
         private IMenuSlide currentMenuSlide;
         private string newSlideId;
+        private bool repeat = false;
 
         public Navigator()
         {
@@ -34,11 +36,9 @@
 
         public void Start()
         {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.CursorVisible = false;
+            Formatter.FormatConsoleWindow();
             ListOfPeople.Load();
-            RefreshTheDisplay(currentMenuSlide);
+            RefreshDisplayedMenu(currentMenuSlide);
 
             while (true)
             {
@@ -65,13 +65,13 @@
         private void SwitchUpwards()
         {
             this.currentMenuSlide.SelectedOption++;
-            RefreshTheDisplay(currentMenuSlide);
+            RefreshDisplayedMenu(currentMenuSlide);
         }
 
         private void SwitchDownwards()
         {
             this.currentMenuSlide.SelectedOption--;
-            RefreshTheDisplay(currentMenuSlide);
+            RefreshDisplayedMenu(currentMenuSlide);
         }
 
         private void EnterSelectedOption()
@@ -79,7 +79,7 @@
             // Id is the numeric pathway from main menu to the slide
             NewSlideId = currentMenuSlide.Id + currentMenuSlide.SelectedOption;
 
-           
+
             if (newSlideId == "00")
             {
                 ListOfPeople.Save();
@@ -88,25 +88,41 @@
             else if (newSlideId == "01")
             {
                 var qMaster = new QuizMaster();
-                qMaster.StartQuiz();
+                do
+                {
+
+                } while (this.repeat);
+                try
+                {
+                    qMaster.CollectPersonalData();
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Printer.PrintError(ex.Message);
+                    this.DisplayFooter();
+                    
+                }
+                catch (ArgumentException ex)
+                {
+                }
                 ReturnToPreviousMenu();
             }
             else
             {
                 currentMenuSlide = menu.GetSlideById(newSlideId);
-                RefreshTheDisplay(currentMenuSlide);
+                RefreshDisplayedMenu(currentMenuSlide);
             }
         }
 
         private void ReturnToPreviousMenu()
         {
-            NewSlideId = currentMenuSlide.Id.Substring(0, currentMenuSlide.Id.Length - 2);
+            NewSlideId = currentMenuSlide.Id.Substring(0, currentMenuSlide.Id.Length - 1);
             currentMenuSlide = menu.GetSlideById(newSlideId);
-            RefreshTheDisplay(currentMenuSlide);
+            RefreshDisplayedMenu(currentMenuSlide);
 
         }
 
-        private void RefreshTheDisplay(IMenuSlide menuSlide)
+        private void RefreshDisplayedMenu(IMenuSlide menuSlide)
         {
             Console.Clear();
 
@@ -116,21 +132,37 @@
 
                 if (i == menuSlide.SelectedOption)
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
                     string textLine = $"-->{menuSlide.Options[i]}<--";
+                    int xCoordinate = (Console.WindowWidth - textLine.Length) / 2;
 
-                    Console.SetCursorPosition((Console.WindowWidth - textLine.Length) / 2, yCoordinate);
-                    Console.WriteLine(textLine);
-
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, ConsoleColor.DarkBlue);
                 }
                 else
                 {
                     string textLine = menuSlide.Options[i];
+                    int xCoordinate = (Console.WindowWidth - textLine.Length) / 2;
 
-                    Console.SetCursorPosition((Console.WindowWidth - textLine.Length) / 2, yCoordinate);
-                    Console.WriteLine(textLine);
+                    Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, ConsoleColor.DarkGreen);
                 }
+            }
+        }
+
+        private void DisplayFooter()
+        {
+            Console.SetCursorPosition(Console.CursorLeft, Console.WindowHeight - 2);
+            Console.WriteLine("Press Enter to start over");
+            Console.WriteLine("Press ESC to return to the previous menu");
+
+            ConsoleKeyInfo info = Console.ReadKey();
+
+            switch (info.Key)
+            {
+                case ConsoleKey.Enter:
+                    this.repeat = true;
+                    break;
+                case ConsoleKey.Escape:
+                    this.repeat = false;
+                    break;
             }
         }
     }

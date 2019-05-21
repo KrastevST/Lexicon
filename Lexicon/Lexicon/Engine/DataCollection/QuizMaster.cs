@@ -2,51 +2,33 @@
 {
     using System;
     using Lexicon.Engine.Contracts;
-    using Lexicon.Engine.Printing;
     using Lexicon.Models.Database;
+    using Lexicon.Utils;
 
     public class QuizMaster : IQuizMaster
     {
         private Person person;
 
-        public void StartQuiz()
+        public void CollectPersonalData()
         {
-            Console.Clear();
-            CollectPersonalData();
-            this.person.Quiz.Start();
-            ListOfPeople.Add(this.person);
-        }
+            this.person = new Person();
 
-        private void CollectPersonalData()
-        {
-            Printer.PrintQuestion("Please enter your first name:");
-            string firstName = FormatName(Console.ReadLine());
+            // TODO finish here first
+            Printer.PrintQuestion("Please enter your first name:", ConsoleColor.DarkYellow);
+            this.person.FirstName = Console.ReadLine();
 
-            Printer.PrintQuestion("Please enter your last name:");
-            string lastName = FormatName(Console.ReadLine());
+            Printer.PrintQuestion("Please enter your last name:", ConsoleColor.DarkYellow);
+            this.person.LastName = Console.ReadLine();
 
-            Printer.PrintQuestion("Please enter your age:");
+            Printer.PrintQuestion("Please enter your age:", ConsoleColor.DarkYellow);
             int age;
             int.TryParse(Console.ReadLine(), out age);
+            this.person.Age = age;
 
-            Printer.PrintQuestion("Please enter your gender:");
-            string gender = Console.ReadLine().ToLower();
+            Printer.PrintQuestion("Please enter your gender:", ConsoleColor.DarkYellow);
+            this.person.Gender = Console.ReadLine().ToLower();
 
-            try
-            {
-                this.person = new Person(firstName, lastName, age, gender);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine(ex.Message);
-                this.CollectPersonalData();
-            }
-        }
-
-        private string FormatName(string name)
-        {
-            string result = char.ToUpper(name[0]) + name.Substring(1).ToLower();
-            return result;
+            
         }
     }
 }

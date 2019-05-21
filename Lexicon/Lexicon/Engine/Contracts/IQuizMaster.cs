@@ -8,6 +8,6 @@
 
     public interface IQuizMaster
     {
-        void StartQuiz();
+        void CollectPersonalData();
     }
 }

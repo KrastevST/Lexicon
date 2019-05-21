@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using Lexicon.Engine.Printing;
     using Lexicon.Models.Contracts;
+    using Lexicon.Utils;
 
     [Serializable()]
     public class Quiz : IQuiz, ISerializable
@@ -51,7 +51,7 @@
 
                     if (Questionnaire[question] == defaultAnswer)
                     {
-                        Printer.PrintQuestion(question);
+                        Printer.PrintQuestion(question, ConsoleColor.DarkYellow);
                         Questionnaire[question] = Console.ReadLine();
                     }
                 }
