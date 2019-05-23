@@ -12,7 +12,7 @@
         private string firstName;
         private string lastName;
         private int age;
-        private string gender;
+        private string gender = "-";
 
         public Person()
         {
@@ -24,11 +24,9 @@
             this.LastName = lName;
             this.Age = age;
             this.Gender = gender;
-
             this.Quiz = new Quiz();
         }
 
-        // TODO validate all properties
         public IQuiz Quiz { get; set; }
         public string FirstName
         {
@@ -45,7 +43,7 @@
                 }
                 else
                 {
-                    throw new ArgumentException("First name can only contain letters", "FirstName");
+                    throw new ArgumentException("First name can only contain letters");
                 }
             }
         }
@@ -64,7 +62,7 @@
                 }
                 else
                 {
-                    throw new ArgumentException("Last name can only contain letters", "LastName");
+                    throw new ArgumentException("Last name can only contain letters");
                 }
             }
         }
@@ -75,7 +73,7 @@
             {
                 if (value < 1 || value > 150)
                 {
-                    throw new ArgumentException("Invalid age. Please enter an integer between 1 and 150","Age");
+                    throw new ArgumentException("Invalid age. Please enter an integer between 1 and 150");
                 }
 
                 this.age = value;
@@ -92,7 +90,7 @@
                 }
                 else
                 {
-                    throw new ArgumentException(@"Invalid gender. Please type ""male"" or ""female"", or type ""-"" if you do not wish to answer", "Gender");
+                    throw new ArgumentException(@"Invalid gender. Please type ""male"" or ""female"", if you do not wish to answer type ""-""");
                 }
             }
         }

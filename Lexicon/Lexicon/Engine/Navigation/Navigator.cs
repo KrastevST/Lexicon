@@ -3,6 +3,7 @@
     using System;
     using Lexicon.Engine.Contracts;
     using Lexicon.Engine.DataCollection;
+    using Lexicon.Exceptions;
     using Lexicon.Models.Contracts;
     using Lexicon.Models.Database;
     using Lexicon.Models.Menus;
@@ -13,7 +14,6 @@
         private IMenu menu;
         private IMenuSlide currentMenuSlide;
         private string newSlideId;
-        private bool repeat = false;
 
         public Navigator()
         {
@@ -38,7 +38,7 @@
         {
             Formatter.FormatConsoleWindow();
             ListOfPeople.Load();
-            RefreshDisplayedMenu(currentMenuSlide);
+            RefreshMenuDisplay(currentMenuSlide);
 
             while (true)
             {
@@ -65,13 +65,13 @@
         private void SwitchUpwards()
         {
             this.currentMenuSlide.SelectedOption++;
-            RefreshDisplayedMenu(currentMenuSlide);
+            RefreshMenuDisplay(currentMenuSlide);
         }
 
         private void SwitchDownwards()
         {
             this.currentMenuSlide.SelectedOption--;
-            RefreshDisplayedMenu(currentMenuSlide);
+            RefreshMenuDisplay(currentMenuSlide);
         }
 
         private void EnterSelectedOption()
@@ -87,30 +87,25 @@
             }
             else if (newSlideId == "01")
             {
-                var qMaster = new QuizMaster();
-                do
-                {
-
-                } while (this.repeat);
-                try
-                {
-                    qMaster.CollectPersonalData();
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Printer.PrintError(ex.Message);
-                    this.DisplayFooter();
-                    
-                }
-                catch (ArgumentException ex)
-                {
-                }
-                ReturnToPreviousMenu();
+                this.TakeTheQuiz();
             }
             else
             {
                 currentMenuSlide = menu.GetSlideById(newSlideId);
-                RefreshDisplayedMenu(currentMenuSlide);
+                RefreshMenuDisplay(currentMenuSlide);
+            }
+        }
+
+        private void TakeTheQuiz()
+        {
+            var qMaster = new QuizMaster();
+            try
+            {
+                qMaster.CollectPersonalData();
+            }
+            catch (MethodTerminationException)
+            {
+                ReturnToPreviousMenu();
             }
         }
 
@@ -118,11 +113,11 @@
         {
             NewSlideId = currentMenuSlide.Id.Substring(0, currentMenuSlide.Id.Length - 1);
             currentMenuSlide = menu.GetSlideById(newSlideId);
-            RefreshDisplayedMenu(currentMenuSlide);
+            RefreshMenuDisplay(currentMenuSlide);
 
         }
 
-        private void RefreshDisplayedMenu(IMenuSlide menuSlide)
+        private void RefreshMenuDisplay(IMenuSlide menuSlide)
         {
             Console.Clear();
 
@@ -144,25 +139,6 @@
 
                     Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, ConsoleColor.DarkGreen);
                 }
-            }
-        }
-
-        private void DisplayFooter()
-        {
-            Console.SetCursorPosition(Console.CursorLeft, Console.WindowHeight - 2);
-            Console.WriteLine("Press Enter to start over");
-            Console.WriteLine("Press ESC to return to the previous menu");
-
-            ConsoleKeyInfo info = Console.ReadKey();
-
-            switch (info.Key)
-            {
-                case ConsoleKey.Enter:
-                    this.repeat = true;
-                    break;
-                case ConsoleKey.Escape:
-                    this.repeat = false;
-                    break;
             }
         }
     }
