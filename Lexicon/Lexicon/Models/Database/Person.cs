@@ -18,15 +18,6 @@
         {
         }
 
-        public Person(string fName, string lName, int age, string gender)
-        {
-            this.FirstName = fName;
-            this.LastName = lName;
-            this.Age = age;
-            this.Gender = gender;
-            this.Quiz = new Quiz();
-        }
-
         public IQuiz Quiz { get; set; }
         public string FirstName
         {

@@ -13,21 +13,21 @@
     {
         private IMenu menu;
         private IMenuSlide currentMenuSlide;
-        private string newSlideId;
+        private int newSlideId;
 
         public Navigator()
         {
             this.menu = new Menu();
-            this.newSlideId = "0";
-            this.currentMenuSlide = this.menu.GetSlideById(newSlideId);
+            this.newSlideId = 1;
+            this.currentMenuSlide = this.menu.GetSlideById(this.NewSlideId);
         }
 
-        private string NewSlideId
+        private int NewSlideId
         {
-            get => newSlideId;
+            get => this.newSlideId;
             set
             {
-                if (value != "0")
+                if (value > 1)
                 {
                     newSlideId = value;
                 }
@@ -38,7 +38,7 @@
         {
             Formatter.FormatConsoleWindow();
             ListOfPeople.Load();
-            RefreshMenuDisplay(currentMenuSlide);
+            RefreshMenuDisplay(this.currentMenuSlide);
 
             while (true)
             {
@@ -71,28 +71,62 @@
         private void SwitchDownwards()
         {
             this.currentMenuSlide.SelectedOption--;
-            RefreshMenuDisplay(currentMenuSlide);
+            RefreshMenuDisplay(this.currentMenuSlide);
         }
 
         private void EnterSelectedOption()
         {
             // Id is the numeric pathway from main menu to the slide
-            NewSlideId = currentMenuSlide.Id + currentMenuSlide.SelectedOption;
+            this.NewSlideId = this.currentMenuSlide.Id * 10 + this.currentMenuSlide.SelectedOption;
 
 
-            if (newSlideId == "00")
+            if (this.NewSlideId == 10)
             {
                 ListOfPeople.Save();
                 Environment.Exit(0);
             }
-            else if (newSlideId == "01")
+            else if (this.NewSlideId == 11)
             {
                 this.TakeTheQuiz();
             }
             else
             {
-                currentMenuSlide = menu.GetSlideById(newSlideId);
-                RefreshMenuDisplay(currentMenuSlide);
+                this.currentMenuSlide = menu.GetSlideById(this.NewSlideId);
+                RefreshMenuDisplay(this.currentMenuSlide);
+            }
+        }
+
+        private void ReturnToPreviousMenu()
+        {
+            this.NewSlideId = this.currentMenuSlide.Id / 10;
+            this.currentMenuSlide = menu.GetSlideById(this.NewSlideId);
+            RefreshMenuDisplay(this.currentMenuSlide);
+
+        }
+
+        private void RefreshMenuDisplay(IMenuSlide menuSlide)
+        {
+            Console.Clear();
+
+            for (int i = menuSlide.Options.Length - 1; i >= 0; i--)
+            {
+                string textLine;
+                ConsoleColor color;
+
+                if (i == menuSlide.SelectedOption)
+                {
+                    textLine = $"-->{menuSlide.Options[i]}<--";
+                    color = ConsoleColor.DarkBlue;
+                }
+                else
+                {
+                    textLine = menuSlide.Options[i];
+                    color = ConsoleColor.DarkGreen;
+                }
+
+                int xCoordinate = (Console.WindowWidth - textLine.Length) / 2;
+                int yCoordinate = 10 + menuSlide.Options.Length - i;
+                Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, color);
             }
         }
 
@@ -106,39 +140,6 @@
             catch (MethodTerminationException)
             {
                 ReturnToPreviousMenu();
-            }
-        }
-
-        private void ReturnToPreviousMenu()
-        {
-            NewSlideId = currentMenuSlide.Id.Substring(0, currentMenuSlide.Id.Length - 1);
-            currentMenuSlide = menu.GetSlideById(newSlideId);
-            RefreshMenuDisplay(currentMenuSlide);
-
-        }
-
-        private void RefreshMenuDisplay(IMenuSlide menuSlide)
-        {
-            Console.Clear();
-
-            for (int i = menuSlide.Options.Length - 1; i >= 0; i--)
-            {
-                int yCoordinate = 10 + menuSlide.Options.Length - i;
-
-                if (i == menuSlide.SelectedOption)
-                {
-                    string textLine = $"-->{menuSlide.Options[i]}<--";
-                    int xCoordinate = (Console.WindowWidth - textLine.Length) / 2;
-
-                    Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, ConsoleColor.DarkBlue);
-                }
-                else
-                {
-                    string textLine = menuSlide.Options[i];
-                    int xCoordinate = (Console.WindowWidth - textLine.Length) / 2;
-
-                    Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, ConsoleColor.DarkGreen);
-                }
             }
         }
     }

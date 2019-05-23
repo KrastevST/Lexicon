@@ -11,7 +11,7 @@
         public void Display()
         {
             Console.SetCursorPosition(Console.CursorLeft, Console.WindowHeight - 2);
-            Console.WriteLine("Press Enter to start over");
+            Console.WriteLine("Press Enter to try again");
             Console.WriteLine("Press ESC to return to main menu");
         }
         public bool IsRepeating()

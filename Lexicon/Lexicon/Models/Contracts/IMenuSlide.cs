@@ -2,7 +2,7 @@
 {
     public interface IMenuSlide
     {
-        string Id { get; }
+        int Id { get; }
         string[] Options { get; }
         int SelectedOption { get; set; }
     }

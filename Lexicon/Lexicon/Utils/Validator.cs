@@ -11,7 +11,7 @@
     {
         public static bool ValidateWord(string word)
         {
-            bool result = Regex.IsMatch(word, @"^[\w]+$");
+            bool result = Regex.IsMatch(word, @"^[A-Za-z]+$");
             return result;
         }
     }

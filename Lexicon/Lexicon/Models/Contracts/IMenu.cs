@@ -7,6 +7,6 @@
     {
         IList<MenuSlide> Slides { get; }
 
-        IMenuSlide GetSlideById(string id);
+        IMenuSlide GetSlideById(int id);
     }
 }
