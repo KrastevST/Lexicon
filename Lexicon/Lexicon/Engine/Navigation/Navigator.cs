@@ -27,7 +27,7 @@
             get => this.newSlideId;
             set
             {
-                if (value > 1)
+                if (value >= 1)
                 {
                     newSlideId = value;
                 }
@@ -98,7 +98,7 @@
 
         private void ReturnToPreviousMenu()
         {
-            this.NewSlideId = this.currentMenuSlide.Id / 10;
+            this.NewSlideId = this.NewSlideId / 10; 
             this.currentMenuSlide = menu.GetSlideById(this.NewSlideId);
             RefreshMenuDisplay(this.currentMenuSlide);
 

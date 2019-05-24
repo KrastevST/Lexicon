@@ -89,12 +89,12 @@
 
         private void Handle(Exception ex, Action currentMethod)
         {
-            var navFooter = new NavigationFooter();
+            var footNav = new FooterNavigator();
 
             Printer.PrintError(ex.Message);
-            navFooter.Display();
+            footNav.Display();
 
-            bool repeat = navFooter.IsRepeating();
+            bool repeat = footNav.IsRepeating();
             if (repeat)
             {
                 currentMethod();

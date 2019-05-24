@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class NavigationFooter
+    public class FooterNavigator
     {
         public void Display()
         {
