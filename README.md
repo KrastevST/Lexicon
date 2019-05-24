@@ -1,2 +1,2 @@
 # Lexicon
-A simple console application
+A console application that collects personal data.
