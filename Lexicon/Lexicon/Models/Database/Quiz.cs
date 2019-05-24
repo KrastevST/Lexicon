@@ -9,8 +9,6 @@
     [Serializable()]
     public class Quiz : IQuiz, ISerializable
     {
-        // TODO arrange appropriately
-        private IDictionary<string, string> questionnaire;
         private readonly string defaultAnswer = "Not answered";
         private IReadOnlyCollection<string> questions =
             new List<string>
@@ -20,6 +18,7 @@
                 "What is your favorite color",
                 "What is your favorite movie?",
                 "What is your favorite song?",
+                "What is the capital of Assyria?",
                 "What is your dream destination?",
                 "What would you grab if your house was on fire?",
                 "Which three items would you take on a desert island?",
@@ -27,6 +26,7 @@
                 "Do you like this quiz?",
                 "What do you think about the author?"
             };
+        private IDictionary<string, string> questionnaire;
 
         public Quiz()
         {

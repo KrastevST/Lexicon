@@ -40,6 +40,7 @@
             ListOfPeople.Load();
             RefreshMenuDisplay(this.currentMenuSlide);
 
+            // TODO change the condition
             while (true)
             {
                 ConsoleKeyInfo info = Console.ReadKey();
@@ -98,7 +99,7 @@
 
         private void ReturnToPreviousMenu()
         {
-            this.NewSlideId = this.NewSlideId / 10; 
+            this.NewSlideId = this.NewSlideId / 10;
             this.currentMenuSlide = menu.GetSlideById(this.NewSlideId);
             RefreshMenuDisplay(this.currentMenuSlide);
 
@@ -133,6 +134,7 @@
         private void TakeTheQuiz()
         {
             var qMaster = new QuizMaster();
+
             try
             {
                 qMaster.CollectPersonalData();
@@ -141,6 +143,9 @@
             {
                 ReturnToPreviousMenu();
             }
+
+            qMaster.CollectQuizData();
+            qMaster.SaveAllData();
         }
     }
 }

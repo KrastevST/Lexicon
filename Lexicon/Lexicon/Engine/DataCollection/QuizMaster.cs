@@ -24,6 +24,17 @@
             this.CollectGender();
         }
 
+        public void CollectQuizData()
+        {
+            this.person.Quiz = new Quiz();
+            this.person.Quiz.Start();
+        }
+
+        public void SaveAllData()
+        {
+            ListOfPeople.Add(this.person);
+        }
+
         private void CollectFirstName()
         {
             try
