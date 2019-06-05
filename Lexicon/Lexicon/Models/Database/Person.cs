@@ -1,10 +1,9 @@
 ﻿namespace Lexicon.Models.Database
 {
     using Lexicon.Models.Contracts;
-    using Lexicon.Utils;
     using System;
     using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text.RegularExpressions;
 
     [Serializable()]
     public class Person : IPerson, ISerializable
@@ -24,7 +23,7 @@
             get => firstName;
             set
             {
-                if (Validator.ValidateWord(value))
+                if (Regex.IsMatch(value, @"^[A-Za-z]+$"))
                 {
                     this.firstName = value;
                 }
@@ -43,7 +42,7 @@
             get => lastName;
             set
             {
-                if (Validator.ValidateWord(value))
+                if (Regex.IsMatch(value, @"^[A-Za-z]+$"))
                 {
                     this.lastName = value;
                 }
