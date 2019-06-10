@@ -31,6 +31,10 @@
                 {
                     newSlideId = value;
                 }
+                else
+                {
+                    newSlideId = 1;
+                }
             }
         }
 
@@ -57,6 +61,7 @@
                         EnterSelectedOption();
                         break;
                     case ConsoleKey.Backspace:
+                    case ConsoleKey.Escape:
                         ReturnToPreviousMenu();
                         break;
                 }
@@ -89,6 +94,19 @@
             else if (this.NewSlideId == 11)
             {
                 this.TakeTheQuiz();
+            }
+            else if (this.NewSlideId == 120)
+            {
+
+            }
+            else if (this.NewSlideId == 121)
+            {
+                ListOfPeople.Erase();
+            }
+            else if (this.NewSlideId == 122)
+            {
+                ReturnToPreviousMenu();
+                ReturnToPreviousMenu();
             }
             else
             {
@@ -146,6 +164,7 @@
 
             qMaster.CollectQuizData();
             qMaster.SaveAllData();
+            ReturnToPreviousMenu();
         }
     }
 }
