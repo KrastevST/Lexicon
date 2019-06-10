@@ -44,7 +44,6 @@
             ListOfPeople.Load();
             RefreshMenuDisplay(this.currentMenuSlide);
 
-            // TODO change the condition
             while (true)
             {
                 ConsoleKeyInfo info = Console.ReadKey();
@@ -63,6 +62,9 @@
                     case ConsoleKey.Backspace:
                     case ConsoleKey.Escape:
                         ReturnToPreviousMenu();
+                        break;
+                    default:
+                        RefreshMenuDisplay(currentMenuSlide);
                         break;
                 }
             }
@@ -117,6 +119,7 @@
 
         private void ReturnToPreviousMenu()
         {
+            // Id is the numeric pathway from main menu to the slide
             this.NewSlideId = this.NewSlideId / 10;
             this.currentMenuSlide = menu.GetSlideById(this.NewSlideId);
             RefreshMenuDisplay(this.currentMenuSlide);
@@ -160,6 +163,7 @@
             catch (MethodTerminationException)
             {
                 ReturnToPreviousMenu();
+                return;
             }
 
             qMaster.CollectQuizData();
