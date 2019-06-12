@@ -112,7 +112,17 @@
             }
             else if (this.NewSlideId == 122 && ListOfPeople.People.Count == 0)
             {
-                Printer.PrintText("The list is empty. Press any key to return to the previous menu", ConsoleColor.DarkGreen);
+                Printer.PrintQuestion("The list is empty. Press any key to return to the previous menu", ConsoleColor.DarkGreen);
+                ConsoleKeyInfo info = Console.ReadKey();
+                ReturnToPreviousMenu();
+            }
+            else if (this.NewSlideId > 1220)
+            {
+                int index = (this.NewSlideId % 10) - 1;
+                var person = ListOfPeople.People[index];
+                Console.Clear();
+                Printer.PrintPersonalInfo(person);
+                Console.WriteLine("     Press any key to return to previous menu");
                 ConsoleKeyInfo info = Console.ReadKey();
                 ReturnToPreviousMenu();
             }
@@ -176,7 +186,7 @@
             qMaster.SaveAllData();
             ListOfPeople.Save();
             UpdateListOfPeople();
-            Printer.PrintText("Thank you for taking the quiz! Press any key to return to Main Menu", ConsoleColor.DarkGreen);
+            Printer.PrintQuestion("Thank you for taking the quiz! Press any key to return to Main Menu", ConsoleColor.DarkGreen);
             ConsoleKeyInfo info = Console.ReadKey();
             ReturnToPreviousMenu();
             ReturnToPreviousMenu();
