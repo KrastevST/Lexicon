@@ -45,6 +45,8 @@
             {
                 File.Delete(dataFile);
             }
+
+            People = new List<Person>();
         }
 
         public static void Add(Person person)

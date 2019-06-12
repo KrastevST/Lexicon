@@ -13,9 +13,8 @@
             this.Slides = new List<MenuSlide>();
 
             // Id is the numeric pathway from main menu to the slide
-            this.Slides.Add(new MenuSlide(1, new string[] { "Exit", "Take the quiz", "List of people" }));
-            this.Slides.Add(new MenuSlide(12, new string[] { "View", "Erase all", "Return" }));
-            // TODO add slide "List of people" and add the view, delete and return functionalities
+            this.Slides.Add(new MenuSlide(1, new List<string> { "Exit", "Take the quiz", "List of people" }));
+            this.Slides.Add(new MenuSlide(12, new List<string> { "Return", "Erase", "View" }));
         }
         public IList<MenuSlide> Slides { get; private set; }
 

@@ -1,6 +1,8 @@
 ﻿namespace Lexicon.Engine.Navigation
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Lexicon.Engine.Contracts;
     using Lexicon.Engine.DataCollection;
     using Lexicon.Exceptions;
@@ -42,6 +44,7 @@
         {
             Formatter.FormatConsoleWindow();
             ListOfPeople.Load();
+            UpdateListOfPeople();
             RefreshMenuDisplay(this.currentMenuSlide);
 
             while (true)
@@ -97,17 +100,20 @@
             {
                 this.TakeTheQuiz();
             }
-            else if (this.NewSlideId == 120)
+            else if (this.NewSlideId == 120 || this.NewSlideId == 1220)
             {
-
+                ReturnToPreviousMenu();
+                ReturnToPreviousMenu();
             }
             else if (this.NewSlideId == 121)
             {
                 ListOfPeople.Erase();
+                UpdateListOfPeople();
             }
-            else if (this.NewSlideId == 122)
+            else if (this.NewSlideId == 122 && ListOfPeople.People.Count == 0)
             {
-                ReturnToPreviousMenu();
+                Printer.PrintText("The list is empty. Press any key to return to the previous menu", ConsoleColor.DarkGreen);
+                ConsoleKeyInfo info = Console.ReadKey();
                 ReturnToPreviousMenu();
             }
             else
@@ -130,7 +136,7 @@
         {
             Console.Clear();
 
-            for (int i = menuSlide.Options.Length - 1; i >= 0; i--)
+            for (int i = menuSlide.Options.Count - 1; i >= 0; i--)
             {
                 string textLine;
                 ConsoleColor color;
@@ -147,7 +153,7 @@
                 }
 
                 int xCoordinate = (Console.WindowWidth - textLine.Length) / 2;
-                int yCoordinate = 10 + menuSlide.Options.Length - i;
+                int yCoordinate = 10 + menuSlide.Options.Count - i;
                 Printer.PrintMenuOption(textLine, xCoordinate, yCoordinate, color);
             }
         }
@@ -168,7 +174,26 @@
 
             qMaster.CollectQuizData();
             qMaster.SaveAllData();
+            ListOfPeople.Save();
+            UpdateListOfPeople();
+            Printer.PrintText("Thank you for taking the quiz! Press any key to return to Main Menu", ConsoleColor.DarkGreen);
+            ConsoleKeyInfo info = Console.ReadKey();
             ReturnToPreviousMenu();
+            ReturnToPreviousMenu();
+        }
+
+        private void UpdateListOfPeople()
+        {
+            var listOfPeopleSlide = this.menu.Slides.FirstOrDefault(x => x.Id == 122);
+            this.menu.Slides.Remove(listOfPeopleSlide);
+
+            if (ListOfPeople.People.Count != 0)
+            {
+                List<string> peopleNames = ListOfPeople.People.Select(x => $"{x.FirstName} {x.LastName}").ToList();
+                peopleNames.Insert(0, "Return");
+
+                this.menu.Slides.Add(new MenuSlide(122, peopleNames));
+            }
         }
     }
 }

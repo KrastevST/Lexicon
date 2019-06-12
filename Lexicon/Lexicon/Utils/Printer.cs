@@ -4,7 +4,7 @@
 
     public static class Printer
     {
-        public static void PrintQuestion(string text, ConsoleColor color)
+        public static void PrintText(string text, ConsoleColor color)
         {
             Console.Clear();
             Console.ForegroundColor = color;
