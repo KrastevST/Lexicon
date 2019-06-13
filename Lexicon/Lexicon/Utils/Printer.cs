@@ -15,7 +15,7 @@
 
         }
 
-        public static void PrintQuestion(string text, ConsoleColor color)
+        public static void CleanPrintText(string text, ConsoleColor color)
         {
             Console.Clear();
             PrintText(text, color);

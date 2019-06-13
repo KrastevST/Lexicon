@@ -45,7 +45,7 @@
 
                     if (Questionnaire[question] == defaultAnswer)
                     {
-                        Printer.PrintQuestion(question, ConsoleColor.DarkYellow);
+                        Printer.CleanPrintText(question, ConsoleColor.DarkYellow);
                         Questionnaire[question] = Console.ReadLine();
                     }
                 }

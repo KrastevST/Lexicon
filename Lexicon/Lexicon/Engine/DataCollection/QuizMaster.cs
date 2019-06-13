@@ -39,7 +39,7 @@
         {
             try
             {
-                Printer.PrintQuestion("Please enter your first name:", ConsoleColor.DarkYellow);
+                Printer.CleanPrintText("Please enter your first name:", ConsoleColor.DarkYellow);
                 this.person.FirstName = Console.ReadLine();
             }
             catch (ArgumentNullException ex)
@@ -56,7 +56,7 @@
         {
             try
             {
-                Printer.PrintQuestion("Please enter your last name:", ConsoleColor.DarkYellow);
+                Printer.CleanPrintText("Please enter your last name:", ConsoleColor.DarkYellow);
                 this.person.LastName = Console.ReadLine();
             }
             catch (ArgumentNullException ex)
@@ -74,7 +74,7 @@
         {
             try
             {
-                Printer.PrintQuestion("Please enter your age:", ConsoleColor.DarkYellow);
+                Printer.CleanPrintText("Please enter your age:", ConsoleColor.DarkYellow);
                 int age;
                 int.TryParse(Console.ReadLine(), out age);
                 this.person.Age = age;
@@ -89,7 +89,7 @@
         {
             try
             {
-                Printer.PrintQuestion("Please enter your gender:", ConsoleColor.DarkYellow);
+                Printer.CleanPrintText("Please enter your gender:", ConsoleColor.DarkYellow);
                 this.person.Gender = Console.ReadLine().ToLower();
             }
             catch (ArgumentException ex)

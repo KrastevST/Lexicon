@@ -96,7 +96,13 @@
                 ListOfPeople.Save();
                 Environment.Exit(0);
             }
-            else if (this.NewSlideId == 11)
+            else if (this.NewSlideId == 11 && ListOfPeople.People.Count == 9)
+            {
+                Printer.CleanPrintText("The list is full. Press any key to return to the previous menu", ConsoleColor.DarkGreen);
+                ConsoleKeyInfo info = Console.ReadKey();
+                ReturnToPreviousMenu();
+            }
+            else if (this.NewSlideId == 11 )
             {
                 this.TakeTheQuiz();
             }
@@ -112,7 +118,7 @@
             }
             else if (this.NewSlideId == 122 && ListOfPeople.People.Count == 0)
             {
-                Printer.PrintQuestion("The list is empty. Press any key to return to the previous menu", ConsoleColor.DarkGreen);
+                Printer.CleanPrintText("The list is empty. Press any key to return to the previous menu", ConsoleColor.DarkGreen);
                 ConsoleKeyInfo info = Console.ReadKey();
                 ReturnToPreviousMenu();
             }
@@ -186,7 +192,7 @@
             qMaster.SaveAllData();
             ListOfPeople.Save();
             UpdateListOfPeople();
-            Printer.PrintQuestion("Thank you for taking the quiz! Press any key to return to Main Menu", ConsoleColor.DarkGreen);
+            Printer.CleanPrintText("Thank you for taking the quiz! Press any key to return to Main Menu", ConsoleColor.DarkGreen);
             ConsoleKeyInfo info = Console.ReadKey();
             ReturnToPreviousMenu();
             ReturnToPreviousMenu();
